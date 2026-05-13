@@ -1,18 +1,21 @@
 import React from 'react'
-import './styles.css'
+import { Metadata } from 'next'
+import './globals.css'
+import ClientLayout from './ClientLayout'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+export const metadata: Metadata = {
+  title: 'Turbo Drive & Spa | Premium Mobile Detailing in Salt Lake City, UT',
+  description: 'Northern Utah\'s #1 rated mobile detailing & car wash service. Premium eco-friendly products, professional equipment, and 100% satisfaction guaranteed. Book your appointment today!',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      </head>
       <body>
-        <main>{children}</main>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   )
