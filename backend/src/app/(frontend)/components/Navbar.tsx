@@ -12,7 +12,6 @@ const navLinks = [
   { name: 'Why Us', to: '/why-us' },
   { name: 'Services', to: '/services' },
   { name: 'Pricing', to: '/pricing' },
-  { name: 'Testimonials', to: '/testimonials' },
 ]
 
 export default function Navbar() {

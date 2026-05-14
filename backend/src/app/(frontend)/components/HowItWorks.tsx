@@ -9,16 +9,19 @@ const steps = [
     num: '01.',
     title: 'Reservation and Confirmation',
     description: 'Effortlessly schedule your appointment online or send us a text at (000) 000-0000. Confirm your booking with a nominal deposit, and we\'ll promptly send you a confirmation text for your assurance.',
+    image: '/ddesign1.png',
   },
   {
     num: '02.',
     title: 'On-Site Expertise',
     description: 'Our professional team, equipped with all the necessary tools and equipment, arrives at your location. Simply provide access to a power outlet, and we\'ll begin to elevate your vehicle\'s condition.',
+    image: '/ddesign2.png',
   },
   {
     num: '03.',
     title: 'Visual Approval and Payment',
     description: 'Review photos and videos showcasing the completed service. Once you\'re completely satisfied, settle the remaining balance with ease. Experience stress-free vehicle maintenance at its finest.',
+    image: '/ddesign3.png',
   }
 ]
 
@@ -42,7 +45,7 @@ export default function HowItWorks() {
             >
               <div className="how-it-works__image-container">
                 <div className="how-it-works__image-box">
-                  <img src="/car-wash-hero.png" alt={step.title} />
+                  <img src={step.image} alt={step.title} />
                 </div>
                 <div className={`how-it-works__number ${index === 0 ? 'how-it-works__number--active' : ''}`}>
                   {step.num}

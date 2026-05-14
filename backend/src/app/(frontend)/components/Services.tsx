@@ -8,12 +8,12 @@ const services = [
   {
     title: 'Premium Detail',
     description: 'Comprehensive interior & exterior detail',
-    price: '$125',
+    price: '₹125',
   },
   {
     title: 'Essentials Membership',
     description: '4 scratch-free maintenance washes a month',
-    price: '$150',
+    price: '₹150',
   }
 ]
 
@@ -44,8 +44,8 @@ export default function Services() {
               </div>
               <h3 className="services__card-title">{service.title}</h3>
               <p className="services__card-desc">{service.description}</p>
-              <div className="services__card-price-label">Starting at</div>
-              <div className="services__card-price">{service.price}</div>
+              <div className="services__card-price-label" style={{ display: 'none' }}>Starting at</div>
+              <div className="services__card-price" style={{ display: 'none' }}>{service.price}</div>
               <button 
                 onClick={() => setIsBookingOpen(true)} 
                 className="services__card-link"

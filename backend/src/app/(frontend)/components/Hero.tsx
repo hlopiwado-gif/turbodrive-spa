@@ -32,11 +32,7 @@ export default function Hero() {
             </div>
 
             <h1 className="hero__title">
-              Mobile Detailing
-              <br />
-              <span className="hero__title-highlight">& Wash</span> in
-              <br />
-              Salt Lake City, UT
+              Turbo Drive <span className="hero__title-highlight">& Spa</span>
             </h1>
 
             <p className="hero__description">

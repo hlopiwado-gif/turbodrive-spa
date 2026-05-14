@@ -1,0 +1,277 @@
+/* ============================================
+   OUR SERVICES – Card Carousel Section
+   ============================================ */
+.our-services {
+  background: var(--color-white, #fff);
+  position: relative;
+  padding: 80px 0 100px;
+  overflow: hidden;
+}
+
+.our-services__header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.our-services__title {
+  font-family: var(--font-heading);
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--color-black, #111);
+  letter-spacing: -0.5px;
+}
+
+.our-services__title .highlight {
+  color: var(--color-primary, #FFD600);
+}
+
+/* Carousel container */
+.our-services__carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 420px;
+  max-width: 900px;
+  margin: 0 auto;
+  perspective: 1200px;
+}
+
+/* Individual card */
+.our-services__card {
+  position: absolute;
+  width: 260px;
+  height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+}
+
+.our-services__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.our-services__card:hover img {
+  transform: scale(1.05);
+}
+
+/* Card positions – fan layout */
+.our-services__card[data-position="-2"] {
+  transform: translateX(-320px) rotate(-12deg) scale(0.8);
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.our-services__card[data-position="-1"] {
+  transform: translateX(-170px) rotate(-6deg) scale(0.9);
+  z-index: 2;
+  opacity: 0.85;
+}
+
+.our-services__card[data-position="0"] {
+  transform: translateX(0) rotate(0deg) scale(1);
+  z-index: 5;
+  width: 280px;
+  height: 370px;
+}
+
+.our-services__card[data-position="1"] {
+  transform: translateX(170px) rotate(6deg) scale(0.9);
+  z-index: 2;
+  opacity: 0.85;
+}
+
+.our-services__card[data-position="2"] {
+  transform: translateX(320px) rotate(12deg) scale(0.8);
+  z-index: 1;
+  opacity: 0.7;
+}
+
+/* Center card overlay */
+.our-services__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  text-align: center;
+}
+
+.our-services__card[data-position="0"] .our-services__card-overlay {
+  opacity: 1;
+}
+
+.our-services__card-overlay h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.our-services__card-overlay p {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 20px;
+  line-height: 1.5;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.our-services__card-btn {
+  padding: 10px 28px;
+  border-radius: 50px;
+  background: var(--color-black, #111);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.our-services__card-btn:hover {
+  background: var(--color-primary, #FFD600);
+  color: var(--color-black, #111);
+  transform: scale(1.05);
+}
+
+/* Navigation arrows */
+.our-services__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.our-services__nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-black, #111);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.our-services__nav-btn:hover {
+  background: var(--color-primary, #FFD600);
+  color: var(--color-black, #111);
+  transform: scale(1.1);
+}
+
+/* Dots */
+.our-services__dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.our-services__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.our-services__dot--active {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--color-black, #111);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .our-services {
+    padding: 60px 0 80px;
+  }
+
+  .our-services__title {
+    font-size: 2rem;
+  }
+
+  .our-services__carousel {
+    height: 340px;
+  }
+
+  .our-services__card {
+    width: 200px;
+    height: 270px;
+  }
+
+  .our-services__card[data-position="0"] {
+    width: 220px;
+    height: 300px;
+  }
+
+  .our-services__card[data-position="-2"],
+  .our-services__card[data-position="2"] {
+    transform: translateX(-240px) rotate(-12deg) scale(0.75);
+    opacity: 0.5;
+  }
+
+  .our-services__card[data-position="2"] {
+    transform: translateX(240px) rotate(12deg) scale(0.75);
+  }
+
+  .our-services__card[data-position="-1"] {
+    transform: translateX(-120px) rotate(-6deg) scale(0.85);
+  }
+
+  .our-services__card[data-position="1"] {
+    transform: translateX(120px) rotate(6deg) scale(0.85);
+  }
+}
+
+@media (max-width: 480px) {
+  .our-services__carousel {
+    height: 300px;
+  }
+
+  .our-services__card {
+    width: 170px;
+    height: 230px;
+  }
+
+  .our-services__card[data-position="0"] {
+    width: 190px;
+    height: 260px;
+  }
+
+  .our-services__card[data-position="-2"],
+  .our-services__card[data-position="2"] {
+    display: none;
+  }
+
+  .our-services__card[data-position="-1"] {
+    transform: translateX(-100px) rotate(-8deg) scale(0.85);
+  }
+
+  .our-services__card[data-position="1"] {
+    transform: translateX(100px) rotate(8deg) scale(0.85);
+  }
+}

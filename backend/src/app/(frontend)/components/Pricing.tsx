@@ -87,8 +87,8 @@ export default function Pricing() {
               <div className="pricing__card-header">
                 <h3 className="pricing__card-name">{plan.name}</h3>
                 <p className="pricing__card-desc">{plan.description}</p>
-                <div className="pricing__card-price">
-                  <span className="pricing__price-currency">$</span>
+                <div className="pricing__card-price" style={{ display: 'none' }}>
+                  <span className="pricing__price-currency">₹</span>
                   <span className="pricing__price-amount">{plan.price}</span>
                   <span className="pricing__price-per">/session</span>
                 </div>
