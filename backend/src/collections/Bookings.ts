@@ -2,9 +2,14 @@ import type { CollectionConfig } from 'payload'
 
 export const Bookings: CollectionConfig = {
   slug: 'bookings',
+  labels: {
+    singular: 'Booking',
+    plural: 'Bookings',
+  },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'phone', 'date', 'time', 'status'],
+    group: 'Workspace',
   },
   access: {
     read: () => true,
@@ -33,13 +38,6 @@ export const Bookings: CollectionConfig = {
           type: 'text',
         }
       ],
-      admin: {
-        components: {
-          RowLabel: ({ data }) => {
-            return data?.serviceName || 'Service'
-          },
-        },
-      },
     },
     {
       name: 'date',

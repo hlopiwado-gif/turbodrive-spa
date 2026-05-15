@@ -67,10 +67,11 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
-    media: Media;
+    pages: Page;
     bookings: Booking;
     services: Service;
+    users: User;
+    media: Media;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,10 +79,11 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     bookings: BookingsSelect<false> | BookingsSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -91,8 +93,24 @@ export interface Config {
     defaultIDType: string;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    homepage: Homepage;
+    'pricing-page': PricingPage;
+    'testimonials-page': TestimonialsPage;
+    'why-us-page': WhyUsPage;
+    'services-page': ServicesPage;
+    branding: Branding;
+    'footer-section': FooterSection;
+  };
+  globalsSelect: {
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
+    'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
+    'testimonials-page': TestimonialsPageSelect<false> | TestimonialsPageSelect<true>;
+    'why-us-page': WhyUsPageSelect<false> | WhyUsPageSelect<true>;
+    'services-page': ServicesPageSelect<false> | ServicesPageSelect<true>;
+    branding: BrandingSelect<false> | BrandingSelect<true>;
+    'footer-section': FooterSectionSelect<false> | FooterSectionSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -122,29 +140,47 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Manage all pages on the website
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "pages".
  */
-export interface User {
+export interface Page {
   id: string;
+  title: string;
+  /**
+   * The URL path for this page (e.g., "about-us", "contact")
+   */
+  slug: string;
+  /**
+   * Overrides the page title in search results
+   */
+  metaTitle?: string | null;
+  /**
+   * Description shown in search engine results
+   */
+  metaDescription?: string | null;
+  heroImage?: (string | null) | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  status?: ('published' | 'draft' | 'in-review') | null;
+  showInNavigation?: boolean | null;
+  navigationOrder?: number | null;
   updatedAt: string;
   createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  sessions?:
-    | {
-        id: string;
-        createdAt?: string | null;
-        expiresAt: string;
-      }[]
-    | null;
-  password?: string | null;
-  collection: 'users';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -153,6 +189,11 @@ export interface User {
 export interface Media {
   id: string;
   alt: string;
+  /**
+   * Auto-generated after upload
+   */
+  imagekitUrl?: string | null;
+  imagekitFileId?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -201,6 +242,31 @@ export interface Service {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+  collection: 'users';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -224,12 +290,8 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'users';
-        value: string | User;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: string | Media;
+        relationTo: 'pages';
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'bookings';
@@ -238,6 +300,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'services';
         value: string | Service;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'media';
+        value: string | Media;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -283,43 +353,20 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "pages_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  heroImage?: T;
+  content?: T;
+  status?: T;
+  showInNavigation?: T;
+  navigationOrder?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -351,6 +398,48 @@ export interface ServicesSelect<T extends boolean = true> {
   order?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  imagekitUrl?: T;
+  imagekitFileId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -391,6 +480,459 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Manage all sections of the homepage from one place
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: string;
+  heroBadge?: string | null;
+  heroTitle?: string | null;
+  heroTitleHighlight?: string | null;
+  heroDescription?: string | null;
+  heroFeatures?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  heroImage?: (string | null) | Media;
+  heroCustomerCount?: string | null;
+  heroRating?: string | null;
+  heroYearsExperience?: string | null;
+  servicesTitle?: string | null;
+  /**
+   * This part will be highlighted in the accent color
+   */
+  servicesTitleHighlight?: string | null;
+  servicesSubtitle?: string | null;
+  /**
+   * Add the cards shown in the carousel. If empty, services from the Services collection will be used instead.
+   */
+  serviceCards?:
+    | {
+        title: string;
+        description?: string | null;
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  whySectionTag?: string | null;
+  whySectionTitle?: string | null;
+  whySectionTitleHighlight?: string | null;
+  whySubtitle?: string | null;
+  whyReasons?:
+    | {
+        title: string;
+        description: string;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  howTitle?: string | null;
+  howSteps?:
+    | {
+        stepNumber: string;
+        title: string;
+        description: string;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  pricingSectionTag?: string | null;
+  pricingSectionTitle?: string | null;
+  pricingSectionTitleHighlight?: string | null;
+  pricingSubtitle?: string | null;
+  /**
+   * Toggle price visibility on the frontend
+   */
+  pricingShowPrices?: boolean | null;
+  pricingCurrency?: string | null;
+  pricingPlans?:
+    | {
+        name: string;
+        price: number;
+        description?: string | null;
+        popular?: boolean | null;
+        ctaText?: string | null;
+        features?:
+          | {
+              feature: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  testimonialsSectionTitle?: string | null;
+  testimonialsItems?:
+    | {
+        title: string;
+        text: string;
+        name: string;
+        avatar?: (string | null) | Media;
+        rating?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manage the standalone Pricing page content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing-page".
+ */
+export interface PricingPage {
+  id: string;
+  pageTitle?: string | null;
+  pageSubtitle?: string | null;
+  sectionTag?: string | null;
+  sectionTitle?: string | null;
+  sectionTitleHighlight?: string | null;
+  /**
+   * Toggle price visibility on the frontend
+   */
+  showPrices?: boolean | null;
+  currency?: string | null;
+  plans?:
+    | {
+        name: string;
+        price: number;
+        description?: string | null;
+        popular?: boolean | null;
+        ctaText?: string | null;
+        features?:
+          | {
+              feature: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manage the standalone Testimonials page content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials-page".
+ */
+export interface TestimonialsPage {
+  id: string;
+  pageTitle?: string | null;
+  sectionTitle?: string | null;
+  testimonials?:
+    | {
+        title: string;
+        text: string;
+        name: string;
+        avatar?: (string | null) | Media;
+        rating?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manage the standalone Why Choose Us page content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-us-page".
+ */
+export interface WhyUsPage {
+  id: string;
+  pageTitle?: string | null;
+  sectionTag?: string | null;
+  sectionTitle?: string | null;
+  sectionTitleHighlight?: string | null;
+  subtitle?: string | null;
+  reasons?:
+    | {
+        title: string;
+        description: string;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manage the standalone Services page content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-page".
+ */
+export interface ServicesPage {
+  id: string;
+  pageTitle?: string | null;
+  pageSubtitle?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Configure site branding, logos, and global appearance
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "branding".
+ */
+export interface Branding {
+  id: string;
+  siteName?: string | null;
+  siteTagline?: string | null;
+  logo?: (string | null) | Media;
+  favicon?: (string | null) | Media;
+  /**
+   * Main brand color used across the site
+   */
+  primaryColor?: string | null;
+  contactPhone?: string | null;
+  contactEmail?: string | null;
+  address?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manage footer content, links, and social media
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-section".
+ */
+export interface FooterSection {
+  id: string;
+  ctaTitle?: string | null;
+  ctaText?: string | null;
+  brandDescription?: string | null;
+  socialLinks?: {
+    instagram?: string | null;
+    facebook?: string | null;
+    twitter?: string | null;
+    youtube?: string | null;
+  };
+  copyright?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  heroBadge?: T;
+  heroTitle?: T;
+  heroTitleHighlight?: T;
+  heroDescription?: T;
+  heroFeatures?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  heroImage?: T;
+  heroCustomerCount?: T;
+  heroRating?: T;
+  heroYearsExperience?: T;
+  servicesTitle?: T;
+  servicesTitleHighlight?: T;
+  servicesSubtitle?: T;
+  serviceCards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  whySectionTag?: T;
+  whySectionTitle?: T;
+  whySectionTitleHighlight?: T;
+  whySubtitle?: T;
+  whyReasons?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  howTitle?: T;
+  howSteps?:
+    | T
+    | {
+        stepNumber?: T;
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  pricingSectionTag?: T;
+  pricingSectionTitle?: T;
+  pricingSectionTitleHighlight?: T;
+  pricingSubtitle?: T;
+  pricingShowPrices?: T;
+  pricingCurrency?: T;
+  pricingPlans?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        description?: T;
+        popular?: T;
+        ctaText?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  testimonialsSectionTitle?: T;
+  testimonialsItems?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        name?: T;
+        avatar?: T;
+        rating?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pricing-page_select".
+ */
+export interface PricingPageSelect<T extends boolean = true> {
+  pageTitle?: T;
+  pageSubtitle?: T;
+  sectionTag?: T;
+  sectionTitle?: T;
+  sectionTitleHighlight?: T;
+  showPrices?: T;
+  currency?: T;
+  plans?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        description?: T;
+        popular?: T;
+        ctaText?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials-page_select".
+ */
+export interface TestimonialsPageSelect<T extends boolean = true> {
+  pageTitle?: T;
+  sectionTitle?: T;
+  testimonials?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        name?: T;
+        avatar?: T;
+        rating?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-us-page_select".
+ */
+export interface WhyUsPageSelect<T extends boolean = true> {
+  pageTitle?: T;
+  sectionTag?: T;
+  sectionTitle?: T;
+  sectionTitleHighlight?: T;
+  subtitle?: T;
+  reasons?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-page_select".
+ */
+export interface ServicesPageSelect<T extends boolean = true> {
+  pageTitle?: T;
+  pageSubtitle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "branding_select".
+ */
+export interface BrandingSelect<T extends boolean = true> {
+  siteName?: T;
+  siteTagline?: T;
+  logo?: T;
+  favicon?: T;
+  primaryColor?: T;
+  contactPhone?: T;
+  contactEmail?: T;
+  address?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer-section_select".
+ */
+export interface FooterSectionSelect<T extends boolean = true> {
+  ctaTitle?: T;
+  ctaText?: T;
+  brandDescription?: T;
+  socialLinks?:
+    | T
+    | {
+        instagram?: T;
+        facebook?: T;
+        twitter?: T;
+        youtube?: T;
+      };
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

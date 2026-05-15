@@ -6,7 +6,21 @@ import { FiArrowRight, FiStar, FiCheck } from 'react-icons/fi'
 import { useBooking } from '../context/BookingContext'
 import './Hero.css'
 
-export default function Hero() {
+interface HeroProps {
+  data: {
+    badge: string
+    title: string
+    titleHighlight: string
+    description: string
+    features: string[]
+    heroImageUrl: string
+    customerCount: string
+    rating: string
+    yearsExperience: string
+  }
+}
+
+export default function Hero({ data }: HeroProps) {
   const { setIsBookingOpen } = useBooking()
 
   return (
@@ -28,34 +42,24 @@ export default function Hero() {
           >
             <div className="hero__badge">
               <FiStar className="hero__badge-icon" />
-              <span>#1 Rated Mobile Detailing Service</span>
+              <span>{data.badge}</span>
             </div>
 
             <h1 className="hero__title">
-              Turbo Drive <span className="hero__title-highlight">& Spa</span>
+              {data.title} <span className="hero__title-highlight">{data.titleHighlight}</span>
             </h1>
 
             <p className="hero__description">
-              Northern Utah&apos;s best choice for convenient auto detailing services
-              brought to your residence or workplace. Our team employs
-              state-of-the-art techniques, premium tools, and eco-friendly
-              cleaning products to ensure the impeccable upkeep and protection
-              of your vehicle.
+              {data.description}
             </p>
 
             <div className="hero__features">
-              <div className="hero__feature">
-                <FiCheck className="hero__feature-icon" />
-                <span>Eco-Friendly Products</span>
-              </div>
-              <div className="hero__feature">
-                <FiCheck className="hero__feature-icon" />
-                <span>We Come To You</span>
-              </div>
-              <div className="hero__feature">
-                <FiCheck className="hero__feature-icon" />
-                <span>100% Satisfaction</span>
-              </div>
+              {data.features.map((feature, index) => (
+                <div className="hero__feature" key={index}>
+                  <FiCheck className="hero__feature-icon" />
+                  <span>{feature}</span>
+                </div>
+              ))}
             </div>
 
             <div className="hero__actions">
@@ -75,7 +79,7 @@ export default function Hero() {
                 <div className="hero__trust-avatar" style={{ background: '#FFD600' }}>✨</div>
               </div>
               <div className="hero__trust-text">
-                <span className="hero__trust-count">2,500+</span>
+                <span className="hero__trust-count">{data.customerCount}</span>
                 <span className="hero__trust-label">Happy Customers</span>
               </div>
             </div>
@@ -90,16 +94,16 @@ export default function Hero() {
             <div className="hero__image-wrapper">
               <div className="hero__image-bg"></div>
               <img
-                src="/car-wash-hero.png"
+                src={data.heroImageUrl}
                 alt="Professional car detailing service"
                 className="hero__image"
               />
               <div className="hero__floating-card hero__floating-card--rating animate-float">
                 <div className="hero__card-stars">⭐⭐⭐⭐⭐</div>
-                <div className="hero__card-text">4.9 / 5.0 Rating</div>
+                <div className="hero__card-text">{data.rating}</div>
               </div>
               <div className="hero__floating-card hero__floating-card--years animate-float" style={{ animationDelay: '1s' }}>
-                <div className="hero__card-number">10+</div>
+                <div className="hero__card-number">{data.yearsExperience}</div>
                 <div className="hero__card-text">Years Experience</div>
               </div>
             </div>

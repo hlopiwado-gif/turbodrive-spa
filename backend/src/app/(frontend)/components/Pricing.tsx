@@ -1,12 +1,12 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { FiCheck, FiArrowRight } from 'react-icons/fi'
 import { useBooking } from '../context/BookingContext'
 import './Pricing.css'
 
-const plans = [
+// Fallback data when CMS has no plans
+const fallbackPlans = [
   {
     name: 'Basic Wash',
     price: 49,
@@ -18,6 +18,7 @@ const plans = [
       'Dashboard Polish',
     ],
     cta: 'Get Started',
+    popular: false,
   },
   {
     name: 'Full Detail',
@@ -48,11 +49,32 @@ const plans = [
       'Car Odor Bomb Treatment',
     ],
     cta: 'Go Premium',
+    popular: false,
   },
 ]
 
-export default function Pricing() {
+interface PricingProps {
+  data: {
+    sectionTag: string
+    sectionTitle: string
+    sectionTitleHighlight: string
+    subtitle: string
+    showPrices: boolean
+    currency: string
+    plans: {
+      name: string
+      price: number
+      description: string
+      popular: boolean
+      cta: string
+      features: string[]
+    }[]
+  }
+}
+
+export default function Pricing({ data }: PricingProps) {
   const { setIsBookingOpen } = useBooking()
+  const plans = data.plans.length > 0 ? data.plans : fallbackPlans
 
   return (
     <section className="pricing section-padding" id="pricing">
@@ -60,14 +82,13 @@ export default function Pricing() {
         <div className="pricing__header">
           <div className="section-tag">
             <span className="tag-dot"></span>
-            Pricing Plans
+            {data.sectionTag}
           </div>
           <h2 className="section-title">
-            Transparent <span className="highlight">Pricing</span>
+            {data.sectionTitle} <span className="highlight">{data.sectionTitleHighlight}</span>
           </h2>
           <p className="section-subtitle">
-            No hidden fees. Choose the package that fits your needs and budget.
-            Every plan includes our satisfaction guarantee.
+            {data.subtitle}
           </p>
         </div>
 
@@ -87,8 +108,8 @@ export default function Pricing() {
               <div className="pricing__card-header">
                 <h3 className="pricing__card-name">{plan.name}</h3>
                 <p className="pricing__card-desc">{plan.description}</p>
-                <div className="pricing__card-price" style={{ display: 'none' }}>
-                  <span className="pricing__price-currency">₹</span>
+                <div className="pricing__card-price" style={{ display: data.showPrices ? 'flex' : 'none' }}>
+                  <span className="pricing__price-currency">{data.currency}</span>
                   <span className="pricing__price-amount">{plan.price}</span>
                   <span className="pricing__price-per">/session</span>
                 </div>

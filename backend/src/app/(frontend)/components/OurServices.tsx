@@ -25,19 +25,33 @@ const fallbackServices: ServiceItem[] = [
   { id: '5', title: 'Full Detail Package', description: 'Complete inside & out', image: { url: '/car-wash-hero.png', alt: 'Full Detail' } },
 ]
 
-export default function OurServices() {
-  const [services, setServices] = useState<ServiceItem[]>(fallbackServices)
+interface OurServicesProps {
+  data?: {
+    title: string
+    titleHighlight: string
+    subtitle: string
+    cards?: ServiceItem[]
+  }
+}
+
+export default function OurServices({ data }: OurServicesProps) {
+  // Use CMS cards if provided, otherwise start with fallback
+  const [services, setServices] = useState<ServiceItem[]>(
+    data?.cards && data.cards.length > 0 ? data.cards : fallbackServices
+  )
   const [activeIndex, setActiveIndex] = useState(0)
   const { setIsBookingOpen } = useBooking()
 
-  // Fetch services from Payload CMS
+  // Only fetch from API if no CMS cards were provided
   useEffect(() => {
+    if (data?.cards && data.cards.length > 0) return // CMS cards take priority
+
     async function fetchServices() {
       try {
         const res = await fetch('/api/services?sort=order&limit=20')
-        const data = await res.json()
-        if (data.docs && data.docs.length > 0) {
-          const mapped = data.docs.map((doc: any) => ({
+        const json = await res.json()
+        if (json.docs && json.docs.length > 0) {
+          const mapped = json.docs.map((doc: any) => ({
             id: doc.id,
             title: doc.title,
             description: doc.description || '',
@@ -53,7 +67,7 @@ export default function OurServices() {
       }
     }
     fetchServices()
-  }, [])
+  }, [data?.cards])
 
   const goNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % services.length)
@@ -85,6 +99,10 @@ export default function OurServices() {
     return pos
   }
 
+  const sectionTitle = data?.title || 'All'
+  const sectionHighlight = data?.titleHighlight || 'Services'
+  const sectionSubtitle = data?.subtitle || ''
+
   return (
     <section className="our-services" id="our-services">
       <div className="container">
@@ -96,8 +114,11 @@ export default function OurServices() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="our-services__title">
-            Our <span className="highlight">Services</span>
+            {sectionTitle} <span className="highlight">{sectionHighlight}</span>
           </h2>
+          {sectionSubtitle && (
+            <p className="our-services__subtitle">{sectionSubtitle}</p>
+          )}
         </motion.div>
 
         <div className="our-services__carousel">

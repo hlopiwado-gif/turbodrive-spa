@@ -25,6 +25,15 @@
   color: var(--color-primary, #FFD600);
 }
 
+.our-services__subtitle {
+  font-size: 1.05rem;
+  color: #666;
+  max-width: 600px;
+  margin: 12px auto 0;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
 /* Carousel container */
 .our-services__carousel {
   display: flex;

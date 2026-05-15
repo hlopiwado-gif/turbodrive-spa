@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import { useBooking } from '../context/BookingContext'
 import './HowItWorks.css'
 
-const steps = [
+// Fallback data when CMS has no steps
+const fallbackSteps = [
   {
     num: '01.',
     title: 'Reservation and Confirmation',
@@ -25,13 +26,26 @@ const steps = [
   }
 ]
 
-export default function HowItWorks() {
+interface HowItWorksProps {
+  data: {
+    title: string
+    steps: {
+      num: string
+      title: string
+      description: string
+      image: string
+    }[]
+  }
+}
+
+export default function HowItWorks({ data }: HowItWorksProps) {
   const { setIsBookingOpen } = useBooking()
+  const steps = data.steps.length > 0 ? data.steps : fallbackSteps
 
   return (
     <section className="how-it-works section-padding" id="how-it-works">
       <div className="container">
-        <h2 className="how-it-works__title">How it Works</h2>
+        <h2 className="how-it-works__title">{data.title}</h2>
         
         <div className="how-it-works__steps">
           {steps.map((step, index) => (

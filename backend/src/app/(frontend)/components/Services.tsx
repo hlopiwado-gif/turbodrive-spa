@@ -17,7 +17,12 @@ const services = [
   }
 ]
 
-export default function Services() {
+interface ServicesProps {
+  pageTitle?: string
+  pageSubtitle?: string
+}
+
+export default function Services({ pageTitle, pageSubtitle }: ServicesProps = {}) {
   const { setIsBookingOpen } = useBooking()
 
   return (
@@ -25,8 +30,9 @@ export default function Services() {
       <div className="container">
         <div className="services__header">
           <h2 className="section-title">
-            Our Services
+            {pageTitle || 'Our Services'}
           </h2>
+          {pageSubtitle && <p className="section-subtitle">{pageSubtitle}</p>}
         </div>
 
         <div className="services__grid">

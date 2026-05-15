@@ -1,11 +1,12 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FiInstagram, FiFacebook, FiTwitter, FiYoutube, FiArrowUp } from 'react-icons/fi'
 import { useBooking } from '../context/BookingContext'
 import './Footer.css'
 
-const footerLinks: Record<string, { name: string; to: string }[]> = {
+const defaultFooterLinks: Record<string, { name: string; to: string }[]> = {
   Services: [
     { name: 'Ceramic Coating', to: '/services' },
     { name: 'Premium Foam Wash', to: '/services' },
@@ -29,8 +30,49 @@ const footerLinks: Record<string, { name: string; to: string }[]> = {
   ],
 }
 
+interface FooterData {
+  ctaTitle: string
+  ctaText: string
+  brandDescription: string
+  socialLinks: {
+    instagram?: string
+    facebook?: string
+    twitter?: string
+    youtube?: string
+  }
+  copyright: string
+}
+
+const defaultFooterData: FooterData = {
+  ctaTitle: 'Ready to make your car shine?',
+  ctaText: 'Book your mobile detailing appointment today and experience the difference.',
+  brandDescription: 'Premium mobile detailing & car wash services in Salt Lake City and Northern Utah.',
+  socialLinks: {},
+  copyright: 'Turbo Drive & Spa. All rights reserved.',
+}
+
 export default function Footer() {
   const { setIsBookingOpen } = useBooking()
+  const [data, setData] = useState<FooterData>(defaultFooterData)
+
+  useEffect(() => {
+    async function fetchFooter() {
+      try {
+        const res = await fetch('/api/globals/footer-section')
+        const json = await res.json()
+        setData({
+          ctaTitle: json.ctaTitle || defaultFooterData.ctaTitle,
+          ctaText: json.ctaText || defaultFooterData.ctaText,
+          brandDescription: json.brandDescription || defaultFooterData.brandDescription,
+          socialLinks: json.socialLinks || {},
+          copyright: json.copyright || defaultFooterData.copyright,
+        })
+      } catch {
+        // Use fallback data
+      }
+    }
+    fetchFooter()
+  }, [])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -43,10 +85,14 @@ export default function Footer() {
         <div className="footer__cta">
           <div className="footer__cta-content">
             <h3 className="footer__cta-title">
-              Ready to make your car <span className="highlight">shine</span>?
+              {data.ctaTitle.includes('shine') ? (
+                <>
+                  {data.ctaTitle.split('shine')[0]}<span className="highlight">shine</span>{data.ctaTitle.split('shine')[1]}
+                </>
+              ) : data.ctaTitle}
             </h3>
             <p className="footer__cta-text">
-              Book your mobile detailing appointment today and experience the difference.
+              {data.ctaText}
             </p>
           </div>
           <button onClick={() => setIsBookingOpen(true)} className="btn-primary footer__cta-btn">
@@ -61,17 +107,17 @@ export default function Footer() {
               <img src="/logo.png" alt="Turbo Drive & Spa" className="footer__logo-img" />
             </Link>
             <p className="footer__brand-desc">
-              Premium mobile detailing & car wash services in Salt Lake City and Northern Utah.
+              {data.brandDescription}
             </p>
             <div className="footer__socials">
-              <a href="#" className="footer__social" aria-label="Instagram"><FiInstagram /></a>
-              <a href="#" className="footer__social" aria-label="Facebook"><FiFacebook /></a>
-              <a href="#" className="footer__social" aria-label="Twitter"><FiTwitter /></a>
-              <a href="#" className="footer__social" aria-label="YouTube"><FiYoutube /></a>
+              <a href={data.socialLinks.instagram || '#'} className="footer__social" aria-label="Instagram"><FiInstagram /></a>
+              <a href={data.socialLinks.facebook || '#'} className="footer__social" aria-label="Facebook"><FiFacebook /></a>
+              <a href={data.socialLinks.twitter || '#'} className="footer__social" aria-label="Twitter"><FiTwitter /></a>
+              <a href={data.socialLinks.youtube || '#'} className="footer__social" aria-label="YouTube"><FiYoutube /></a>
             </div>
           </div>
 
-          {Object.entries(footerLinks).map(([title, links]) => (
+          {Object.entries(defaultFooterLinks).map(([title, links]) => (
             <div key={title} className="footer__col">
               <h4 className="footer__col-title">{title}</h4>
               <ul className="footer__col-links">
@@ -88,7 +134,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="footer__bottom">
           <p className="footer__copyright">
-            © {new Date().getFullYear()} Turbo Drive & Spa. All rights reserved.
+            © {new Date().getFullYear()} {data.copyright}
           </p>
           <button className="footer__scroll-top" onClick={scrollToTop} aria-label="Scroll to top" id="scroll-top">
             <FiArrowUp />
