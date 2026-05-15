@@ -1,39 +1,41 @@
 import type { CollectionAfterChangeHook } from 'payload'
 import { getImageKit } from '../lib/imagekit'
-import fs from 'fs'
-import path from 'path'
 
 /**
  * After a Media document is created or updated, upload the file to ImageKit
  * and store the ImageKit URL back on the document.
+ *
+ * On Vercel (serverless), local file system is ephemeral, so we read the file
+ * from Payload's own served URL instead of the local disk.
  */
 export const uploadToImageKit: CollectionAfterChangeHook = async ({
   doc,
   req,
   operation,
 }) => {
+  // Skip if triggered by our own update (prevent infinite loop)
+  if (req.context?.skipImageKitUpload) return doc
+
   const ik = getImageKit()
   if (!ik) return doc
 
   // Only process on create or if there's no imagekit URL yet
   if (doc.imagekitUrl && operation === 'update') return doc
 
-  // Resolve the local file path
   const filename = doc.filename
   if (!filename) return doc
 
-  const staticDir = path.resolve(process.cwd(), 'media')
-  const filePath = path.join(staticDir, filename)
-
-  // Check if local file exists
-  if (!fs.existsSync(filePath)) {
-    console.warn(`[ImageKit] Local file not found: ${filePath}`)
-    return doc
-  }
-
   try {
+    // Fetch the file from Payload's own media endpoint
+    // This works both locally and on Vercel
+    const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000'
+
+    const fileUrl = `${baseUrl}/api/media/file/${filename}`
+
     const response = await ik.files.upload({
-      file: fs.createReadStream(filePath),
+      file: fileUrl,
       fileName: filename,
       folder: '/turbo-drive-spa',
       useUniqueFileName: true,
@@ -50,7 +52,6 @@ export const uploadToImageKit: CollectionAfterChangeHook = async ({
         imagekitUrl,
         imagekitFileId,
       },
-      // Prevent infinite loop
       context: { skipImageKitUpload: true },
     })
 

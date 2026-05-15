@@ -34,13 +34,12 @@ export default buildConfig({
     },
     meta: {
       titleSuffix: ' | Turbo Drive & Spa Admin',
-      favicon: '/logo.png',
-      ogImage: '/logo.png',
+      icons: [{ url: '/logo.png' }],
+      openGraph: {
+        images: [{ url: '/logo.png' }],
+      },
     },
     components: {},
-    avatar: {
-      Component: undefined,
-    },
   },
   // Workspace items first, then Config items
   collections: [Pages, Bookings, Services, Users, Media],
