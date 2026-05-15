@@ -14,7 +14,13 @@ export const Media: CollectionConfig = {
       async (args) => {
         // Skip if this update was triggered by the hook itself
         if (args.context?.skipImageKitUpload) return args.doc
-        return uploadToImageKit(args)
+
+        // Run ImageKit upload in background — don't block the response
+        uploadToImageKit(args).catch((err: unknown) => {
+          console.error('[ImageKit] Background upload failed:', err)
+        })
+
+        return args.doc
       },
     ],
   },
