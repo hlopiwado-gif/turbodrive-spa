@@ -20,24 +20,42 @@ export const Media: CollectionConfig = {
         const filename = doc.filename
         if (!filename) return doc
 
-        // Dynamic import to avoid crashing module loading
         try {
+          const { readFileSync, existsSync } = await import('fs')
+          const { resolve, join } = await import('path')
           const { ImageKit } = await import('@imagekit/nodejs')
+
           const privateKey = process.env.IMAGEKIT_PRIVATE_KEY
-          if (!privateKey) return doc
+          if (!privateKey) {
+            console.warn('[ImageKit] No private key set — skipping CDN upload')
+            return doc
+          }
 
           const ik = new ImageKit({ privateKey })
 
-          // Build URL to fetch the uploaded file
-          const baseUrl =
-            process.env.NEXT_PUBLIC_SERVER_URL ||
-            (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
-            `http://localhost:${process.env.PORT || 3000}`
+          // Read the file directly from disk as base64 — it was just written by Payload
+          const staticDir = resolve(process.cwd(), 'media')
+          const filePath = join(staticDir, filename)
 
-          const fileUrl = `${baseUrl}/api/media/file/${filename}`
+          let fileData: string
+
+          if (existsSync(filePath)) {
+            // Convert file to base64 data URI (ImageKit accepts this)
+            const buffer = readFileSync(filePath)
+            fileData = buffer.toString('base64')
+            console.log(`[ImageKit] Reading local file: ${filePath}`)
+          } else {
+            // Fallback: pass the URL for ImageKit to fetch
+            const baseUrl =
+              process.env.NEXT_PUBLIC_SERVER_URL ||
+              (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+              `http://localhost:${process.env.PORT || 3000}`
+            fileData = `${baseUrl}/api/media/file/${filename}`
+            console.log(`[ImageKit] Fetching from URL: ${fileData}`)
+          }
 
           const response = await ik.files.upload({
-            file: fileUrl,
+            file: fileData,
             fileName: filename,
             folder: '/turbo-drive-spa',
             useUniqueFileName: true,
