@@ -136,11 +136,21 @@ export const Homepage: GlobalConfig = {
                   label: 'Short Description',
                 },
                 {
+                  name: 'imageUrl',
+                  type: 'text',
+                  label: 'Image URL (Direct Link)',
+                  admin: {
+                    description: 'Paste an external image URL (e.g. from ImageKit, Unsplash, etc). This takes priority over the uploaded image below.',
+                  },
+                },
+                {
                   name: 'image',
                   type: 'upload',
                   relationTo: 'media',
-                  required: true,
-                  label: 'Card Image',
+                  label: 'Card Image (Upload)',
+                  admin: {
+                    description: 'Or upload an image here. The direct URL above takes priority if filled.',
+                  },
                 },
               ],
             },

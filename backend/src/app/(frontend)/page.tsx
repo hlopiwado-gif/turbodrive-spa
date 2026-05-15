@@ -119,12 +119,14 @@ export default async function HomePage() {
     subtitle: data.servicesSubtitle || 'Explore our full range of professional mobile detailing services designed to keep your vehicle in showroom condition.',
     cards: data.serviceCards?.map((card, i) => {
       const img = card.image as Media | null
+      // Priority: direct URL → ImageKit CDN → local Payload URL
+      const imageUrl = (card as any).imageUrl || getMediaUrl(img)
       return {
         id: card.id || String(i),
         title: card.title,
         description: card.description || '',
         image: {
-          url: getMediaUrl(img),
+          url: imageUrl,
           alt: getMediaAlt(img, card.title),
         },
       }
