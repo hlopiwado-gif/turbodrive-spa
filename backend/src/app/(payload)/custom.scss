@@ -1,29 +1,29 @@
 /* ============================================
    TURBO DRIVE & SPA – ADMIN PANEL THEME
-   Premium dark theme inspired by ServiceAdmin
+   Premium dark theme with refined sidebar
    ============================================ */
 
 /* ---- CSS Variables Override ---- */
 :root {
-  --theme-elevation-0: #0d0d0d;
-  --theme-elevation-50: #131313;
-  --theme-elevation-100: #1a1a1a;
-  --theme-elevation-150: #212121;
-  --theme-elevation-200: #282828;
-  --theme-elevation-250: #303030;
-  --theme-elevation-300: #383838;
-  --theme-elevation-350: #424242;
-  --theme-elevation-400: #4d4d4d;
-  --theme-elevation-450: #585858;
-  --theme-elevation-500: #666666;
-  --theme-elevation-550: #808080;
-  --theme-elevation-600: #999999;
-  --theme-elevation-650: #b3b3b3;
-  --theme-elevation-700: #cccccc;
-  --theme-elevation-750: #d9d9d9;
-  --theme-elevation-800: #e6e6e6;
-  --theme-elevation-850: #f0f0f0;
-  --theme-elevation-900: #f5f5f5;
+  --theme-elevation-0: #0a0a0b;
+  --theme-elevation-50: #111113;
+  --theme-elevation-100: #18181b;
+  --theme-elevation-150: #1e1e22;
+  --theme-elevation-200: #252529;
+  --theme-elevation-250: #2c2c31;
+  --theme-elevation-300: #343439;
+  --theme-elevation-350: #3d3d43;
+  --theme-elevation-400: #47474e;
+  --theme-elevation-450: #525259;
+  --theme-elevation-500: #5e5e66;
+  --theme-elevation-550: #76767f;
+  --theme-elevation-600: #8f8f99;
+  --theme-elevation-650: #ababb3;
+  --theme-elevation-700: #c4c4cc;
+  --theme-elevation-750: #d4d4db;
+  --theme-elevation-800: #e4e4e9;
+  --theme-elevation-850: #ededf0;
+  --theme-elevation-900: #f5f5f7;
   --theme-elevation-950: #fafafa;
   --theme-elevation-1000: #ffffff;
 
@@ -43,22 +43,22 @@
   --theme-warning-650: #FFE34D;
 
   --theme-text: #e4e4e7;
-  --theme-input-bg: #1a1a1a;
+  --theme-input-bg: #18181b;
 
-  /* Custom accent variables */
+  /* Custom accent */
   --admin-accent: #FFD600;
-  --admin-accent-soft: rgba(255, 214, 0, 0.12);
-  --admin-accent-hover: rgba(255, 214, 0, 0.08);
-  --admin-sidebar-bg: #111113;
-  --admin-sidebar-border: rgba(255, 255, 255, 0.06);
-  --admin-card-bg: #18181b;
-  --admin-card-border: rgba(255, 255, 255, 0.06);
+  --admin-accent-soft: rgba(255, 214, 0, 0.1);
+  --admin-accent-hover: rgba(255, 214, 0, 0.06);
+  --admin-sidebar-bg: #0e0e10;
+  --admin-sidebar-border: rgba(255, 255, 255, 0.05);
+  --admin-card-bg: #141416;
+  --admin-card-border: rgba(255, 255, 255, 0.05);
 }
 
 /* ---- Global Admin Styles ---- */
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  background: #0d0d0d !important;
+  background: #0a0a0b !important;
   color: #e4e4e7 !important;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
@@ -67,13 +67,15 @@ body {
 /* ---- Header / Top Bar ---- */
 .template-default__nav,
 header.app-header {
-  background: rgba(13, 13, 13, 0.9) !important;
+  background: rgba(10, 10, 11, 0.85) !important;
   backdrop-filter: blur(24px) saturate(1.2) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.2) !important;
   border-bottom: 1px solid var(--admin-sidebar-border) !important;
 }
 
-/* ===== SIDEBAR ===== */
+/* ================================================================
+   SIDEBAR — Refined Glass Design
+   ================================================================ */
 .nav {
   background: var(--admin-sidebar-bg) !important;
   border-right: 1px solid var(--admin-sidebar-border) !important;
@@ -82,21 +84,22 @@ header.app-header {
 
 .nav__scroll {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
-  padding: 8px 0 !important;
+  scrollbar-color: rgba(255, 255, 255, 0.06) transparent;
+  padding: 4px 0 !important;
 }
 
-/* Sidebar group headers — mimics "WORKSPACE" / "CONFIG" labels */
+/* Sidebar group headers */
 .nav .nav-group__toggle {
-  color: #71717a !important;
-  font-weight: 700 !important;
+  color: #52525b !important;
+  font-weight: 800 !important;
   text-transform: uppercase !important;
-  font-size: 0.65rem !important;
-  letter-spacing: 1.5px !important;
-  padding: 18px 20px 6px 20px !important;
+  font-size: 0.6rem !important;
+  letter-spacing: 2px !important;
+  padding: 22px 22px 8px 22px !important;
   margin: 0 !important;
   border: none !important;
   cursor: default !important;
+  user-select: none !important;
 }
 
 .nav .nav-group__toggle:hover {
@@ -105,51 +108,54 @@ header.app-header {
 
 /* Sidebar nav links */
 .nav a.nav__link {
-  border-radius: 8px !important;
-  margin: 1px 10px !important;
-  padding: 9px 14px !important;
-  font-size: 0.875rem !important;
+  border-radius: 10px !important;
+  margin: 2px 12px !important;
+  padding: 10px 14px !important;
+  font-size: 0.84rem !important;
   font-weight: 500 !important;
-  color: #a1a1aa !important;
-  transition: all 0.18s ease !important;
+  color: #71717a !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
+  position: relative !important;
 }
 
 .nav a.nav__link:hover {
-  background: var(--admin-accent-hover) !important;
-  color: #e4e4e7 !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #a1a1aa !important;
+  transform: translateX(2px) !important;
 }
 
 .nav a.nav__link.active {
   background: var(--admin-accent-soft) !important;
   color: var(--admin-accent) !important;
   font-weight: 600 !important;
+  box-shadow: inset 3px 0 0 var(--admin-accent) !important;
 }
 
 /* Sidebar document count badges */
 .nav a.nav__link .nav__link-count {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #a1a1aa !important;
-  border-radius: 10px !important;
-  font-size: 0.7rem !important;
-  font-weight: 600 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #52525b !important;
+  border-radius: 8px !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
   padding: 2px 8px !important;
-  min-width: 22px !important;
+  min-width: 20px !important;
   text-align: center !important;
   margin-left: auto !important;
 }
 
 .nav a.nav__link.active .nav__link-count {
-  background: var(--admin-accent-soft) !important;
+  background: rgba(255, 214, 0, 0.12) !important;
   color: var(--admin-accent) !important;
 }
 
 /* Sidebar logo area */
 .nav .nav__header {
   border-bottom: 1px solid var(--admin-sidebar-border) !important;
-  padding: 16px 18px !important;
+  padding: 18px 20px !important;
 }
 
 .nav .nav__header a {
@@ -159,50 +165,52 @@ header.app-header {
 }
 
 .nav .nav__header img {
-  max-height: 32px !important;
+  max-height: 30px !important;
   border-radius: 6px !important;
 }
 
-/* Sidebar bottom section (account area) */
+/* Sidebar bottom section */
 .nav .nav__footer {
   border-top: 1px solid var(--admin-sidebar-border) !important;
   padding: 12px 14px !important;
 }
 
 .nav .nav__footer a {
-  border-radius: 8px !important;
-  padding: 8px 12px !important;
-  color: #a1a1aa !important;
-  font-size: 0.875rem !important;
+  border-radius: 10px !important;
+  padding: 9px 14px !important;
+  color: #71717a !important;
+  font-size: 0.84rem !important;
 }
 
 .nav .nav__footer a:hover {
-  background: var(--admin-accent-hover) !important;
-  color: #e4e4e7 !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #a1a1aa !important;
 }
 
-/* ===== MAIN CONTENT AREA ===== */
+/* ================================================================
+   MAIN CONTENT AREA
+   ================================================================ */
 .template-default__wrap {
-  background: #0d0d0d !important;
+  background: #0a0a0b !important;
 }
 
-/* ---- Breadcrumb / Document Header ---- */
+/* Breadcrumb / Document Header */
 .doc-header {
   border-bottom: 1px solid var(--admin-sidebar-border) !important;
   padding-bottom: 16px !important;
 }
 
 .doc-header__title h1 {
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   font-size: 1.5rem !important;
   color: #ffffff !important;
+  letter-spacing: -0.02em !important;
 }
 
-/* Step Pills (breadcrumb) */
 .step-nav a,
 .step-nav span {
-  color: #71717a !important;
-  font-size: 0.8rem !important;
+  color: #52525b !important;
+  font-size: 0.78rem !important;
   font-weight: 500 !important;
 }
 
@@ -210,147 +218,158 @@ header.app-header {
   color: var(--admin-accent) !important;
 }
 
-/* ===== CARDS & SURFACES ===== */
+/* ================================================================
+   CARDS & SURFACES
+   ================================================================ */
 .card,
 .collection-list .table,
 .document-fields {
   background: var(--admin-card-bg) !important;
   border: 1px solid var(--admin-card-border) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
 }
 
-/* ===== BUTTONS ===== */
+/* ================================================================
+   BUTTONS
+   ================================================================ */
 .btn {
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   font-weight: 600 !important;
-  font-size: 0.85rem !important;
-  transition: all 0.2s ease !important;
+  font-size: 0.84rem !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .btn.btn--style-primary {
   background: var(--admin-accent) !important;
-  color: #0d0d0d !important;
+  color: #0a0a0b !important;
   border: none !important;
 }
 
 .btn.btn--style-primary:hover {
   background: #FFE34D !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 20px rgba(255, 214, 0, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(255, 214, 0, 0.2) !important;
 }
 
 .btn.btn--style-secondary {
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  color: #e4e4e7 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #d4d4d8 !important;
   background: transparent !important;
 }
 
 .btn.btn--style-secondary:hover {
   background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
 }
 
-/* ===== FORM FIELDS ===== */
+/* ================================================================
+   FORM FIELDS
+   ================================================================ */
 .field-type input,
 .field-type textarea,
 .field-type select {
-  background: #141416 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 8px !important;
+  background: #111113 !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 10px !important;
   color: #e4e4e7 !important;
-  font-size: 0.9rem !important;
+  font-size: 0.88rem !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .field-type input:focus,
 .field-type textarea:focus,
 .field-type select:focus {
-  border-color: rgba(255, 214, 0, 0.35) !important;
-  box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.08) !important;
+  border-color: rgba(255, 214, 0, 0.3) !important;
+  box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.06) !important;
   outline: none !important;
 }
 
 .field-type label {
   font-weight: 600 !important;
-  color: #a1a1aa !important;
+  color: #71717a !important;
   text-transform: uppercase !important;
-  font-size: 0.68rem !important;
-  letter-spacing: 0.8px !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 1px !important;
 }
 
 .field-type .field-description {
-  color: #52525b !important;
-  font-size: 0.8rem !important;
+  color: #3f3f46 !important;
+  font-size: 0.78rem !important;
 }
 
-/* ===== TABLE / LIST VIEW ===== */
+/* ================================================================
+   TABLE / LIST VIEW
+   ================================================================ */
 .table th {
   background: var(--admin-card-bg) !important;
-  color: #71717a !important;
-  font-weight: 700 !important;
+  color: #52525b !important;
+  font-weight: 800 !important;
   text-transform: uppercase !important;
-  font-size: 0.68rem !important;
-  letter-spacing: 0.8px !important;
+  font-size: 0.62rem !important;
+  letter-spacing: 1px !important;
   border-bottom: 1px solid var(--admin-card-border) !important;
 }
 
 .table td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
-  font-size: 0.875rem !important;
-  color: #d4d4d8 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.025) !important;
+  font-size: 0.87rem !important;
+  color: #a1a1aa !important;
 }
 
 .table tr:hover td {
-  background: rgba(255, 255, 255, 0.02) !important;
+  background: rgba(255, 255, 255, 0.015) !important;
+  color: #d4d4d8 !important;
 }
 
-/* Status cell styling — makes "Live", "Draft", "In Review" cells pop */
+/* Status cells */
 .table td .pill,
 .cell-status .pill {
   border-radius: 6px !important;
-  font-size: 0.72rem !important;
-  font-weight: 600 !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
   padding: 3px 10px !important;
   letter-spacing: 0.3px !important;
 }
 
-/* ===== PILL / BADGE STYLING ===== */
 .pill {
   border-radius: 6px !important;
-  font-size: 0.75rem !important;
+  font-size: 0.72rem !important;
   font-weight: 600 !important;
 }
 
-/* ===== DASHBOARD ===== */
+/* ================================================================
+   DASHBOARD CARDS (Payload default + our custom)
+   ================================================================ */
 .dashboard__card-list .card {
-  border-radius: 14px !important;
-  background: linear-gradient(135deg, var(--admin-card-bg) 0%, #1e1e21 100%) !important;
-  border: 1px solid var(--admin-card-border) !important;
-  transition: all 0.25s ease !important;
+  border-radius: 16px !important;
+  background: linear-gradient(145deg, #141416 0%, #1a1a1e 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
   overflow: hidden !important;
 }
 
 .dashboard__card-list .card:hover {
-  border-color: rgba(255, 214, 0, 0.15) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 214, 0, 0.12) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35) !important;
 }
 
 .dashboard__card-list .card .card__title {
   font-weight: 700 !important;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
-/* Dashboard card count */
 .dashboard__card-list .card .relationship-table__cell-count {
   color: var(--admin-accent) !important;
   font-weight: 700 !important;
 }
 
-/* ===== LOGIN PAGE ===== */
+/* ================================================================
+   LOGIN PAGE
+   ================================================================ */
 .login {
   min-height: 100vh !important;
-  background: #0d0d0d !important;
+  background: #0a0a0b !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -361,8 +380,8 @@ header.app-header {
   position: fixed !important;
   inset: 0 !important;
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(255, 214, 0, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 80%, rgba(255, 214, 0, 0.03) 0%, transparent 50%) !important;
+    radial-gradient(ellipse at 20% 20%, rgba(255, 214, 0, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 214, 0, 0.02) 0%, transparent 50%) !important;
   pointer-events: none !important;
   z-index: 0 !important;
 }
@@ -372,11 +391,11 @@ header.app-header {
   position: fixed !important;
   inset: 0 !important;
   background-image:
-    linear-gradient(rgba(255, 214, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 214, 0, 0.02) 1px, transparent 1px) !important;
+    linear-gradient(rgba(255, 214, 0, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 214, 0, 0.015) 1px, transparent 1px) !important;
   background-size: 60px 60px !important;
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 60%) !important;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 60%) !important;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%) !important;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%) !important;
   pointer-events: none !important;
   z-index: 0 !important;
 }
@@ -385,59 +404,62 @@ header.app-header {
   position: relative !important;
   z-index: 1 !important;
   width: 100% !important;
-  max-width: 440px !important;
+  max-width: 420px !important;
 }
 
 .login form {
-  background: rgba(24, 24, 27, 0.85) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
+  background: rgba(20, 20, 22, 0.9) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 20px !important;
-  padding: 40px 36px !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 24px !important;
+  padding: 44px 40px !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45) !important;
 }
 
 .login h1 {
-  font-size: 1.75rem !important;
+  font-size: 1.6rem !important;
   font-weight: 800 !important;
   color: #ffffff !important;
   text-align: center !important;
+  letter-spacing: -0.02em !important;
 }
 
 .login .template-minimal__branding {
   text-align: center !important;
-  margin-bottom: 24px !important;
+  margin-bottom: 28px !important;
 }
 
 .login .template-minimal__branding img {
-  max-height: 56px !important;
+  max-height: 52px !important;
   margin: 0 auto !important;
 }
 
 .login .btn.btn--style-primary {
   width: 100% !important;
   padding: 14px !important;
-  font-size: 0.95rem !important;
-  border-radius: 12px !important;
+  font-size: 0.92rem !important;
+  border-radius: 14px !important;
   margin-top: 8px !important;
 }
 
 .login input {
-  background: rgba(20, 20, 22, 0.9) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 12px !important;
-  padding: 14px 16px !important;
+  background: rgba(17, 17, 19, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 14px !important;
+  padding: 14px 18px !important;
   color: #ffffff !important;
-  font-size: 0.9rem !important;
+  font-size: 0.88rem !important;
 }
 
 .login input:focus {
-  border-color: rgba(255, 214, 0, 0.4) !important;
-  box-shadow: 0 0 0 4px rgba(255, 214, 0, 0.06) !important;
+  border-color: rgba(255, 214, 0, 0.35) !important;
+  box-shadow: 0 0 0 4px rgba(255, 214, 0, 0.05) !important;
 }
 
-/* ===== SCROLLBAR ===== */
+/* ================================================================
+   SCROLLBAR
+   ================================================================ */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -448,32 +470,36 @@ header.app-header {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
 }
 
-/* ===== SMOOTH TRANSITIONS ===== */
+/* ================================================================
+   GLOBAL TRANSITIONS
+   ================================================================ */
 a, button, input, textarea, select, .card, .btn, .nav a, .table tr {
-  transition: all 0.18s ease !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* ===== TABS (for Homepage global) ===== */
+/* ================================================================
+   TABS (Homepage global)
+   ================================================================ */
 .tabs-field .tabs-field__tab-button {
-  border-radius: 8px 8px 0 0 !important;
+  border-radius: 10px 10px 0 0 !important;
   font-weight: 600 !important;
-  font-size: 0.82rem !important;
-  color: #71717a !important;
-  padding: 10px 18px !important;
+  font-size: 0.8rem !important;
+  color: #52525b !important;
+  padding: 11px 20px !important;
   border-bottom: 2px solid transparent !important;
-  transition: all 0.18s ease !important;
+  transition: all 0.2s ease !important;
 }
 
 .tabs-field .tabs-field__tab-button:hover {
-  color: #a1a1aa !important;
+  color: #71717a !important;
   background: rgba(255, 255, 255, 0.02) !important;
 }
 
@@ -483,93 +509,107 @@ a, button, input, textarea, select, .card, .btn, .nav a, .table tr {
   border-bottom: 2px solid var(--admin-accent) !important;
 }
 
-/* ===== ARRAY FIELD ITEMS ===== */
+/* ================================================================
+   ARRAY FIELD ITEMS
+   ================================================================ */
 .array-field .array-field__row {
-  background: #141416 !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  border-radius: 10px !important;
+  background: #111113 !important;
+  border: 1px solid rgba(255, 255, 255, 0.04) !important;
+  border-radius: 12px !important;
   margin-bottom: 6px !important;
 }
 
 .array-field .array-field__row:hover {
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* ===== GROUP FIELDS ===== */
+/* ================================================================
+   GROUP FIELDS
+   ================================================================ */
 .group-field {
-  background: rgba(20, 20, 22, 0.5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.04) !important;
-  border-radius: 12px !important;
-  padding: 20px !important;
+  background: rgba(17, 17, 19, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.03) !important;
+  border-radius: 14px !important;
+  padding: 22px !important;
 }
 
-/* ===== UPLOAD / FILE FIELD ===== */
+/* ================================================================
+   UPLOAD / FILE FIELD
+   ================================================================ */
 .upload .upload__thumbnail {
-  border-radius: 10px !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-/* ===== SEARCH / FILTER ===== */
+/* ================================================================
+   SEARCH / FILTER
+   ================================================================ */
 .search-filter input {
-  background: #141416 !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 10px !important;
+  background: #111113 !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 12px !important;
 }
 
 .search-filter input:focus {
-  border-color: rgba(255, 214, 0, 0.25) !important;
+  border-color: rgba(255, 214, 0, 0.2) !important;
 }
 
-/* ===== PAGINATION ===== */
+/* ================================================================
+   PAGINATION
+   ================================================================ */
 .paginator .paginator__page {
-  border-radius: 8px !important;
+  border-radius: 10px !important;
   font-weight: 500 !important;
 }
 
 .paginator .paginator__page--is-current {
   background: var(--admin-accent) !important;
-  color: #0d0d0d !important;
+  color: #0a0a0b !important;
   font-weight: 700 !important;
 }
 
-/* ===== TOAST NOTIFICATIONS ===== */
+/* ================================================================
+   TOAST NOTIFICATIONS
+   ================================================================ */
 .payload-toast-container .toast {
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   font-weight: 500 !important;
-  backdrop-filter: blur(16px) !important;
+  backdrop-filter: blur(20px) !important;
 }
 
 .payload-toast-container .toast--success {
-  background: rgba(15, 77, 43, 0.9) !important;
-  border: 1px solid rgba(34, 197, 94, 0.25) !important;
+  background: rgba(15, 77, 43, 0.92) !important;
+  border: 1px solid rgba(34, 197, 94, 0.2) !important;
 }
 
 .payload-toast-container .toast--error {
-  background: rgba(77, 15, 15, 0.9) !important;
-  border: 1px solid rgba(239, 68, 68, 0.25) !important;
+  background: rgba(77, 15, 15, 0.92) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
 }
 
-/* ===== SELECT FIELD (Dropdown) ===== */
+/* ================================================================
+   SELECT FIELD (Dropdown)
+   ================================================================ */
 .rs__control {
-  background: #141416 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 8px !important;
+  background: #111113 !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 10px !important;
 }
 
 .rs__menu {
-  background: #1e1e21 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 10px !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
+  background: #1a1a1e !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45) !important;
   overflow: hidden !important;
 }
 
 .rs__option {
-  color: #d4d4d8 !important;
+  color: #a1a1aa !important;
 }
 
 .rs__option--is-focused {
-  background: var(--admin-accent-hover) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
 }
 
 .rs__option--is-selected {
@@ -577,56 +617,75 @@ a, button, input, textarea, select, .card, .btn, .nav a, .table tr {
   color: var(--admin-accent) !important;
 }
 
-/* ===== CHECKBOX ===== */
+/* ================================================================
+   CHECKBOX
+   ================================================================ */
 .check input:checked + .check__input {
   background: var(--admin-accent) !important;
   border-color: var(--admin-accent) !important;
 }
 
-/* ===== RICH TEXT EDITOR ===== */
+/* ================================================================
+   RICH TEXT EDITOR
+   ================================================================ */
 .rich-text .rich-text-toolbar {
-  background: #141416 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: #111113 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 .rich-text .rich-text-editor {
+  background: #111113 !important;
+}
+
+/* ================================================================
+   MODAL / DRAWER
+   ================================================================ */
+.drawer__content {
   background: #141416 !important;
 }
 
-/* ===== MODAL / DRAWER ===== */
-.drawer__content {
-  background: #18181b !important;
-}
-
 .modal__content {
-  background: #18181b !important;
+  background: #141416 !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55) !important;
 }
 
-/* ===== COLLECTION LIST HEADER ===== */
+/* ================================================================
+   COLLECTION LIST HEADER
+   ================================================================ */
 .collection-list__header {
   border-bottom: 1px solid var(--admin-sidebar-border) !important;
 }
 
 .collection-list__header h1 {
-  font-weight: 700 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
 }
 
-/* ===== SIDEBAR DOCUMENT CONTROLS ===== */
+/* ================================================================
+   SIDEBAR DOCUMENT CONTROLS
+   ================================================================ */
 .doc-controls {
   border-left: 1px solid var(--admin-sidebar-border) !important;
   background: var(--admin-card-bg) !important;
 }
 
-/* ===== GLOBAL EDIT VIEW ===== */
+/* ================================================================
+   GLOBAL EDIT VIEW
+   ================================================================ */
 .global-edit {
-  background: #0d0d0d !important;
+  background: #0a0a0b !important;
 }
 
-/* ===== STATUS INDICATOR DOTS (custom) ===== */
-/* Make the select values more visual in list view */
 .cell-status {
   font-weight: 600 !important;
+}
+
+/* ================================================================
+   CUSTOM DASHBOARD HOVER EFFECTS
+   ================================================================ */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }

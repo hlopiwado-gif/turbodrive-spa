@@ -39,7 +39,9 @@ export default buildConfig({
         images: [{ url: '/logo.png' }],
       },
     },
-    components: {},
+    components: {
+      afterDashboard: ['/app/(payload)/components/Dashboard'],
+    },
   },
   // Workspace items first, then Config items
   collections: [Pages, Bookings, Services, Users, Media],
