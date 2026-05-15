@@ -8,6 +8,7 @@ import HowItWorks from './components/HowItWorks'
 import Testimonials from './components/Testimonials'
 import Pricing from './components/Pricing'
 import type { Media } from '../../payload-types'
+import { getMediaUrl, getMediaAlt } from './utils/media'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,7 +32,7 @@ export default async function HomePage() {
       'We Come To You',
       '100% Satisfaction',
     ],
-    heroImageUrl: heroImage?.url || '/car-wash-hero.png',
+    heroImageUrl: getMediaUrl(heroImage),
     customerCount: data.heroCustomerCount || '2,500+',
     rating: data.heroRating || '4.9 / 5.0 Rating',
     yearsExperience: data.heroYearsExperience || '10+',
@@ -51,7 +52,7 @@ export default async function HomePage() {
         return {
           title: r.title,
           description: r.description,
-          imageUrl: img?.url || `/deign${i + 1}.png`,
+          imageUrl: getMediaUrl(img, `/deign${i + 1}.png`),
         }
       }) || [],
   }
@@ -66,7 +67,7 @@ export default async function HomePage() {
           num: s.stepNumber,
           title: s.title,
           description: s.description,
-          image: img?.url || `/ddesign${i + 1}.png`,
+          image: getMediaUrl(img, `/ddesign${i + 1}.png`),
         }
       }) || [],
   }
@@ -102,9 +103,10 @@ export default async function HomePage() {
           title: t.title,
           text: t.text,
           name: t.name,
-          avatar:
-            avatar?.url ||
-            `https://i.pravatar.cc/150?u=${t.name.toLowerCase().replace(/\s/g, '')}`,
+          avatar: getMediaUrl(
+            avatar,
+            `https://i.pravatar.cc/150?u=${t.name.toLowerCase().replace(/\s/g, '')}`
+          ),
           rating: t.rating || 5,
         }
       }) || [],
@@ -122,8 +124,8 @@ export default async function HomePage() {
         title: card.title,
         description: card.description || '',
         image: {
-          url: img?.url || '/car-wash-hero.png',
-          alt: (img as any)?.alt || card.title,
+          url: getMediaUrl(img),
+          alt: getMediaAlt(img, card.title),
         },
       }
     }) || [],

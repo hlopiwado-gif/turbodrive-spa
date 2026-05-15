@@ -56,7 +56,9 @@ export default function OurServices({ data }: OurServicesProps) {
             title: doc.title,
             description: doc.description || '',
             image: {
-              url: typeof doc.image === 'object' ? doc.image.url : '/car-wash-hero.png',
+              url: typeof doc.image === 'object'
+                ? (doc.image.imagekitUrl || doc.image.url || '/car-wash-hero.png')
+                : '/car-wash-hero.png',
               alt: typeof doc.image === 'object' ? (doc.image.alt || doc.title) : doc.title,
             },
           }))
